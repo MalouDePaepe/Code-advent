@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Code advent-ures 2024/1.0.0": {
+        "runtime": {
+          "Code advent-ures 2024.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Code advent-ures 2024/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

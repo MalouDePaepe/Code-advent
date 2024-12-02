@@ -1,0 +1,15 @@
+C:\Git\Code-advent\Code advent-ures 2024\bin\Debug\net6.0\Code advent-ures 2024.exe
+C:\Git\Code-advent\Code advent-ures 2024\bin\Debug\net6.0\Code advent-ures 2024.deps.json
+C:\Git\Code-advent\Code advent-ures 2024\bin\Debug\net6.0\Code advent-ures 2024.runtimeconfig.json
+C:\Git\Code-advent\Code advent-ures 2024\bin\Debug\net6.0\Code advent-ures 2024.dll
+C:\Git\Code-advent\Code advent-ures 2024\bin\Debug\net6.0\Code advent-ures 2024.pdb
+C:\Git\Code-advent\Code advent-ures 2024\obj\Debug\net6.0\Code advent-ures 2024.csproj.AssemblyReference.cache
+C:\Git\Code-advent\Code advent-ures 2024\obj\Debug\net6.0\Code advent-ures 2024.GeneratedMSBuildEditorConfig.editorconfig
+C:\Git\Code-advent\Code advent-ures 2024\obj\Debug\net6.0\Code advent-ures 2024.AssemblyInfoInputs.cache
+C:\Git\Code-advent\Code advent-ures 2024\obj\Debug\net6.0\Code advent-ures 2024.AssemblyInfo.cs
+C:\Git\Code-advent\Code advent-ures 2024\obj\Debug\net6.0\Code advent-ures 2024.csproj.CoreCompileInputs.cache
+C:\Git\Code-advent\Code advent-ures 2024\obj\Debug\net6.0\Code advent-ures 2024.dll
+C:\Git\Code-advent\Code advent-ures 2024\obj\Debug\net6.0\refint\Code advent-ures 2024.dll
+C:\Git\Code-advent\Code advent-ures 2024\obj\Debug\net6.0\Code advent-ures 2024.pdb
+C:\Git\Code-advent\Code advent-ures 2024\obj\Debug\net6.0\Code advent-ures 2024.genruntimeconfig.cache
+C:\Git\Code-advent\Code advent-ures 2024\obj\Debug\net6.0\ref\Code advent-ures 2024.dll

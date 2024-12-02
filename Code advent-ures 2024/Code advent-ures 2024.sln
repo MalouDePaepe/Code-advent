@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Code advent-ures 2024", "Code advent-ures 2024.csproj", "{37B3AC3C-8A6B-42D5-93E4-731011533363}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{37B3AC3C-8A6B-42D5-93E4-731011533363}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37B3AC3C-8A6B-42D5-93E4-731011533363}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37B3AC3C-8A6B-42D5-93E4-731011533363}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37B3AC3C-8A6B-42D5-93E4-731011533363}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7C5BAA6F-8D58-4703-A946-EDEEA503FC1A}
+	EndGlobalSection
+EndGlobal
