@@ -14,20 +14,40 @@ runners.Add(new day2());
 for(int i = 0; i < (runners.Count-1); i++)
 {
     runners[i].parse();
-    runners[i].run();
+    runners[i].part1();
+    runners[i].part2();
 
 }
 abstract class day_runner
 {
     public abstract void parse();
     
-    public abstract void run();
-
-    public void print(string output)
+    public abstract void part1();
+    public virtual void part2()
     {
-        Console.WriteLine(output);
+
     }
+    
 }
+
+
+
+class day2 : day_runner
+{
+    public override void parse()
+    {
+
+    }
+
+    public override void part1()
+    {
+
+
+    }
+
+}
+
+
 
 class day1 : day_runner{
 
@@ -50,12 +70,10 @@ class day1 : day_runner{
 
     }
 
-    public override void run()
+    public override void part1()
     {
         m_firstColumn.Sort();
         m_secondColumn.Sort();
-        int eene = m_firstColumn[0];
-        int andere = m_firstColumn[0];
         int som = 0;
 
         for (int i = 0; i < (m_firstColumn.Count); i++)
@@ -64,21 +82,29 @@ class day1 : day_runner{
             som += Math.Abs(m_firstColumn[i] - m_secondColumn[i]);
             
         }
-        print(som.ToString());
+
+
+        //print(som.ToString());
+
     }
+    public override void part2()
+    {
+        int result = 0;
+        foreach(int nr in m_firstColumn)
+        {
+            //first col nr          secondColumn.find count
+            // first col nr * found count
+            // result += int
+
+            List<int> list = m_secondColumn.FindAll(x => x == nr);
+            result += (nr*list.Count);
+            
+
+        }
+
+        Console.WriteLine(result);
+
+    }
+
 }
 
-class day2 : day_runner
-{
-    public override void parse()
-    {
-    
-    }
-
-    public override void run()
-    {
-
-
-    }
-
-}
