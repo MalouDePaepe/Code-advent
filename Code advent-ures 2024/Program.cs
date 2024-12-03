@@ -64,31 +64,101 @@ class day2 : day_runner
     public override void part1()
     {
 
-        //Check if safe
+        //Check if safe (precheck)
         // 1: atleast one or at most three
         // ex. 1st = 1 and report is 5 long
+        //      1 2 3 4 5           1 + 4
         //     last has to be 1 + count-1 
         //      at most 1 4 7 10 13 count-1*3 
+        int numRemoved = 0;
         foreach(List<int> report in reports)
         {
-            if (report[report.Count - 1] > Math.Abs((report[0] + report.Count - 1)) && report[report.Count - 1]  < Math.Abs((report[0] + (report.Count-1)*3))) ;
-            report.Clear();
+            int first = report[0];
+            int last = report[report.Count - 1];
+            int listSize = report.Count();
+            // if distance is smaller than size-1 ===> clear
+            if (Math.Abs(last - first) < listSize - 1)
+            {
+                report.Clear();
+                numRemoved++;
+            }
+            // if distance is bigger than size-1 * 3 ===> clear
+            if (Math.Abs(last - first) > (listSize - 1) * 3)
+            {
+                report.Clear();
+                numRemoved++;
+            }
+            // if (report[report.Count - 1] > Math.Abs((report[0] + report.Count - 1)) && report[report.Count - 1]  < Math.Abs((report[0] + (report.Count-1)*3))) ;
+            // report.Clear();
         }
+
+
 
         // 2: all increasing or all decreasing
         foreach (List<int> report in reports)
         {
-            bool valid = true;
+            if (report.Count == 0) continue;
+            bool ascendCheck = true;
+
+            //sets the first one, not taking into account when theyre the same
+            if (report[0] >= report[1])
+            {
+                ascendCheck = false;
+            }
+            else
+            {
+                ascendCheck = true;
+            }
 
             for (int i = 0; i < report.Count - 1; i++)
             {
+                //if the next one is not null
                 if (i + 1 >= report.Count) continue;
+                //make current and next
                 int current = report[i];
                 int next = report[i + 1];
 
-                // 2 - 1 > 0 -> ascending
-                bool isAscending = next - current > 0;
+                //check them
+                if (next > current)
+                {
+                    if (ascendCheck != true)
+                    {
+                        report.Clear();
+                        numRemoved++;
+
+                    }
+                }
+                else
+                {
+                    if (ascendCheck != false)
+                    {
+                        numRemoved++;
+                        report.Clear();
+                    }
+
+                }
+
+                
+
             }
+            //3: also check the distance between the values
+            for (int i = 0; i < report.Count - 1; i++)
+            {
+                //if the next one is not null
+                if (i + 1 >= report.Count) continue;
+                //make current and next
+                int current = report[i];
+                int next = report[i + 1];
+                if (Math.Abs(current - next) > 3 || Math.Abs(current - next) < 1)
+                {
+                    report.Clear();
+                    numRemoved++;
+                }
+                if (report.Count == 0) continue;
+                Console.WriteLine(report[i] + "     " + numRemoved);
+            }
+
+            
         }
     }
 
