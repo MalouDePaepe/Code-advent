@@ -4,14 +4,15 @@ using System.Runtime.InteropServices;
 using System.Collections.Generic;
 
 using System.IO;
-
-
+using System.Text.RegularExpressions;
+using System.Security.Cryptography;
 
 List<day_runner> runners = new List<day_runner>();
 runners.Add(new day1());
 runners.Add(new day2());
+runners.Add(new day3());
 
-for(int i = 0; i < (runners.Count); i++)
+for (int i = 0; i < (runners.Count); i++)
 {
     runners[i].parse();
     runners[i].part1();
@@ -29,7 +30,57 @@ abstract class day_runner
     
 }
 
+class day3 : day_runner
+{
+    string input ="";
+    public override void parse()
+    {
+        string filePath = "C:\\Git\\Code-advent\\resources\\inputDay3.txt";
+        input = File.ReadAllText(filePath);
 
+
+    }
+
+    public override void part1()
+    {
+        int sum = 0;
+        string pattern = @"mul\((-?\d+),(-?\d+)\)";
+        List<string> matches = new List<string>();
+        
+        Regex regex = new Regex(pattern);
+        
+        MatchCollection correct = regex.Matches(input);
+
+        // for each Match called 'match' in the Match Collection 'correct'
+        foreach (Match match in correct)
+        {
+            //add it to the list of Strings called 'matches'
+            matches.Add(match.Value);
+        }
+        //for every index in matches (string list)
+        for(int i = 0; i < matches.Count; i++)
+        {
+            //pattern 
+            string patternIntegers = @"\d+";
+
+            Regex numbers = new Regex(patternIntegers);
+
+            MatchCollection pairs = numbers.Matches(matches[i].ToString());
+
+            List<string> pairsStrings = new List<string>();
+
+            pairsStrings.Add(pairs[0].Value);
+            pairsStrings.Add(pairs[1].Value);
+            
+            int multiplication = int.Parse(pairsStrings[0]) * int.Parse(pairsStrings[1]);
+            sum += multiplication;
+            Console.WriteLine(sum);
+
+        }
+    }
+
+
+}
 
 class day2 : day_runner
 {
@@ -154,12 +205,13 @@ class day2 : day_runner
                     report.Clear();
                     numRemoved++;
                 }
-                if (report.Count == 0) continue;
-                Console.WriteLine(report[i] + "     " + numRemoved);
+                //if (report.Count == 0) continue;
+                //Console.WriteLine(report[i] + "     " + numRemoved);
             }
 
             
         }
+        Console.WriteLine("Day 2 Part 1 ="+ (1000-numRemoved));
     }
 
 }
@@ -220,7 +272,7 @@ class day1 : day_runner{
 
         }
 
-        Console.WriteLine("Day 1 Part 2 "+result);
+        Console.WriteLine("Day 1 Part 2 ="+result);
 
     }
 
