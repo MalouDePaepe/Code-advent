@@ -74,8 +74,41 @@ class day3 : day_runner
             
             int multiplication = int.Parse(pairsStrings[0]) * int.Parse(pairsStrings[1]);
             sum += multiplication;
-            Console.WriteLine(sum);
+            
 
+        }
+        Console.WriteLine("Day 3 Part 1 =" + sum);
+    }
+
+    public override void part2()
+    {
+        string pattern = @"mul\((-?\d+),(-?\d+)\)|do\(\)|dont\(\)";
+        List<string> matches = new List<string>();
+
+        Regex regex = new Regex(pattern);
+
+        MatchCollection precheck = regex.Matches(input);
+
+        // for each Match called 'match' in the Match Collection 'precheck'
+        foreach (Match match in precheck)
+        {
+            //add it to the list of Strings called 'matches'
+            matches.Add(match.Value);
+            Console.WriteLine(match.Value);
+        }
+
+        //for every index in matches (string list)
+        for (int i = 0; i < matches.Count; i++) { 
+            bool noDont = true;
+            while (noDont)
+            {
+                if (matches[i] == "dont()")
+                {
+                    noDont = false;
+
+                }
+
+            }
         }
     }
 
@@ -214,6 +247,12 @@ class day2 : day_runner
         Console.WriteLine("Day 2 Part 1 ="+ (1000-numRemoved));
     }
 
+    public override void part2()
+    {
+        string filePath = "C:\\Git\\Code-advent\\resources\\inputDay2.txt";
+
+
+    }
 }
 
 
