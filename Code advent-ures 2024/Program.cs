@@ -7,6 +7,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
 using System.Numerics;
+using System.Net.NetworkInformation;
 
 List<day_runner> runners = new List<day_runner>();
 runners.Add(new day1());
@@ -49,6 +50,11 @@ class day4 : day_runner
     {
         return m_matrix[row][col];
     }
+    // if x, check surrounding (should be a function)
+    // ex. x =  [5.5], check [5,4] [5,6] 
+    //[4,4][4,5][4,6]
+    //[5,4][5,5][5,6]
+    //[6,4][6,5][6,6]
 
     string get_row(int index)
     {         
@@ -61,17 +67,141 @@ class day4 : day_runner
         return row;
     }
 
-    string get_col()
+    string get_col(int index)
     {
-        return "";
+        string col = "";
+        for(int r = 0; r < get_num_rows(); r++)
+        {
+            char character = get_char(r, index);
+            col += character;
+
+        }
+
+        return col;
 
 
     }
 
+    
+   
+
+    int checkRow (string pattern, int r)
+    {
+        string row = get_row(r);
+        Regex rgx = new Regex(pattern);
+        MatchCollection correct = rgx.Matches(row);
+        return  correct.Count;
+
+    }
+
+    int checkCol(string pattern, int c)
+    {
+        string col = get_col(c);
+        Regex rgx = new Regex(pattern);
+        MatchCollection correct = rgx.Matches(col);
+        return correct.Count;
+
+    }
+
+    int checkDiagonalFirstRow(string pattern, bool forward)
+    {
+        int sum = 0;
+        //for each column of the first row
+        for(int i = 0; i  < get_num_cols(); i++) {
+            string diag = getDiagonalFirstRow(i, forward);
+            Regex rgx = new Regex(pattern);
+            MatchCollection correct = rgx.Matches(diag);
+            sum+= correct.Count;
+
+        }
+        return sum;
+    }
+
+
+    string getDiagonalFirstRow(int index, bool forward)
+    {
+
+        
+        string diagonal = "";
+        int diagonalLength = index + 1;
+
+        // backwards
+        if (forward)
+        {
+            for (int i = 0; i < diagonalLength; i++)
+            {
+
+                char character = get_char(0 + i, index - i);
+                diagonal += character;
+
+
+            }
+        }
+        else
+        {
+            //forward
+            for (int i = 0; i < diagonalLength; i++)
+            {
+
+                char character = get_char(index - i, 0 + i);
+                diagonal += character;
+
+            }
+        }
+        return diagonal;
+
+    }
+
+    //needs row nr 
+    string getDiagonalLastColumn(int index, bool forward)
+    {
+        int diagonalLength = get_num_rows() - index;
+        string diagonal = "";
+        if (forward)
+        {
+            for (int i = 0; i < diagonalLength; i++)
+            {
+                char character = get_char(index + i, diagonalLength - i);
+                diagonal += character;
+
+            }
+        }
+        else
+        {
+            for (int i = 0; i < diagonalLength; i++)
+            {
+                char character = get_char(diagonalLength - i, index + i);
+                diagonal += character;
+
+            }
+
+        }
+        return diagonal;
+    }
+
+    
+    int checkDiagonalLastColumn(string pattern, bool forward)
+    {
+        int sum = 0;
+        //for each row of the last column
+
+        for (int i = 1; i < get_num_rows()-1; i++)
+        {
+            string diag = getDiagonalLastColumn(i, forward);
+            Regex rgx = new Regex(pattern);
+            MatchCollection correct = rgx.Matches(diag);
+            sum += correct.Count;
+
+        }
+        return sum;
+
+    }
+
+
 
     public override void parse()
     {
-        string filePath = "C:\\Git\\Code-advent\\resources\\inputDay4.txt";
+        string filePath = "C:\\Git\\Code-advent\\resources\\inputDay4Test.txt";
 
         // for each line in your file
         // make a new list of characters
@@ -90,22 +220,52 @@ class day4 : day_runner
     public override void part1()
     {
         int sum = 0;
-        // for each row
+        string patternForward = @"(XMAS)";
+        string patternBackwards = @"(SAMX)";
 
+        // for each row
         for (int r = 0; r < get_num_rows(); r++)
         {
-            string row = get_row(r);
+           //sum += checkRow(patternForward, r);
+           //sum += checkRow(patternBackwards, r);
+            //Console.WriteLine(sum);
         }
 
         // regex on the row
         // if its found, add it to the sum
 
-
-/////////////////
-        
-        // columns
+        //for each column
+        for (int c = 0; c < get_num_cols(); c++)
+        {
+            //sum += checkCol(patternForward, c);
+            //sum += checkCol(patternBackwards, c);
+            //Console.WriteLine(sum);
+        }
+        /////////////////
 
         // diagonals
+       
+        // backward
+        
+        //sum += checkDiagonalFirstRow(patternForward, true);
+        //sum += checkDiagonalFirstRow(patternForward, false);
+        // = 1
+        //Console.WriteLine(sum);
+        //sum += checkDiagonalFirstRow(patternBackwards,true);
+        //sum += checkDiagonalFirstRow(patternBackwards,false);
+        // = +1
+        //Console.WriteLine(sum);
+        //sum += checkDiagonalLastColumn(patternForward, true);
+        //sum += checkDiagonalLastColumn(patternForward, false);
+        // = +1
+        //Console.WriteLine(sum);
+        //sum += checkDiagonalLastColumn(patternBackwards, true);
+        // sum += checkDiagonalLastColumn(patternBackwards, false);
+        // = +6
+        /Console.WriteLine(sum);
+
+        //forward
+
     }
 
     public override void part2()
