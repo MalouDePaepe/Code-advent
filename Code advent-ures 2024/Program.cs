@@ -6,18 +6,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
+using System.Numerics;
 
 List<day_runner> runners = new List<day_runner>();
 runners.Add(new day1());
 runners.Add(new day2());
 runners.Add(new day3());
+runners.Add(new day4());
 
 for (int i = 0; i < (runners.Count); i++)
 {
     runners[i].parse();
     runners[i].part1();
     runners[i].part2();
-
 }
 abstract class day_runner
 {
@@ -30,6 +31,92 @@ abstract class day_runner
     
 }
 
+class day4 : day_runner
+{
+    List<List<char>> m_matrix = new List<List<char>>();
+
+    int get_num_rows()
+    {
+        return m_matrix.Count;
+    }
+
+    int get_num_cols()
+    {
+        return m_matrix[0].Count;
+    }
+    
+    char get_char(int row, int col)
+    {
+        return m_matrix[row][col];
+    }
+
+    string get_row(int index)
+    {         
+        string row = "";
+        for (int col = 0; col < get_num_cols(); col++)
+        {
+            char character = get_char(index, col);
+            row += character;
+        }
+        return row;
+    }
+
+    string get_col()
+    {
+        return "";
+
+
+    }
+
+
+    public override void parse()
+    {
+        string filePath = "C:\\Git\\Code-advent\\resources\\inputDay4.txt";
+
+        // for each line in your file
+        // make a new list of characters
+        // add the new list to your list of lists
+        foreach (string line in File.ReadLines(filePath))
+        {
+            List<char> new_list = new List<char>();
+            for (int i = 0; i < line.Length; i++)
+            {
+                new_list.Add(line[i]);
+            }
+            m_matrix.Add(new_list);
+        }
+    }
+
+    public override void part1()
+    {
+        int sum = 0;
+        // for each row
+
+        for (int r = 0; r < get_num_rows(); r++)
+        {
+            string row = get_row(r);
+        }
+
+        // regex on the row
+        // if its found, add it to the sum
+
+
+/////////////////
+        
+        // columns
+
+        // diagonals
+    }
+
+    public override void part2()
+    {
+        
+    }
+
+
+
+
+}
 class day3 : day_runner
 {
     string input ="";
@@ -82,7 +169,10 @@ class day3 : day_runner
 
     public override void part2()
     {
-        string pattern = @"mul\((-?\d+),(-?\d+)\)|do\(\)|dont\(\)";
+        bool noDont = true;
+
+        int sum = 0;
+        string pattern = @"mul\((-?\d+),(-?\d+)\)|do\(\)|don't\(\)";
         List<string> matches = new List<string>();
 
         Regex regex = new Regex(pattern);
@@ -94,22 +184,52 @@ class day3 : day_runner
         {
             //add it to the list of Strings called 'matches'
             matches.Add(match.Value);
-            Console.WriteLine(match.Value);
+            
         }
 
         //for every index in matches (string list)
         for (int i = 0; i < matches.Count; i++) { 
-            bool noDont = true;
-            while (noDont)
+            
+           
+          
+            if (matches[i] == "don't()")
             {
-                if (matches[i] == "dont()")
-                {
-                    noDont = false;
-
-                }
+                noDont = false;
+                
 
             }
+
+
+            if (matches[i] == "do()")
+            {
+
+                noDont = true;
+                
+            }
+
+            if(matches[i] != "don't()" && matches[i] != "do()" && noDont == true)
+            {
+                //pattern 
+                string patternIntegers = @"\d+";
+
+                Regex numbers = new Regex(patternIntegers);
+
+                MatchCollection pairs = numbers.Matches(matches[i].ToString());
+
+                List<string> pairsStrings = new List<string>();
+
+                pairsStrings.Add(pairs[0].Value);
+                pairsStrings.Add(pairs[1].Value);
+
+                int multiplication = int.Parse(pairsStrings[0]) * int.Parse(pairsStrings[1]);
+                sum += multiplication;
+                
+
+            }
+
+
         }
+        Console.WriteLine("Day 3 Part 1 =" + sum);
     }
 
 
