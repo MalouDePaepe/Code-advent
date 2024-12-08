@@ -56,6 +56,13 @@ class day4 : day_runner
     //[5,4][5,5][5,6]
     //[6,4][6,5][6,6]
 
+    bool isXMAS (int direction, int row, int col)
+    {
+
+
+
+    }
+
     string get_row(int index)
     {         
         string row = "";
@@ -220,6 +227,7 @@ class day4 : day_runner
     public override void part1()
     {
         int sum = 0;
+        int sum2 = 0;
         string patternForward = @"(XMAS)";
         string patternBackwards = @"(SAMX)";
 
@@ -262,7 +270,7 @@ class day4 : day_runner
         //sum += checkDiagonalLastColumn(patternBackwards, true);
         // sum += checkDiagonalLastColumn(patternBackwards, false);
         // = +6
-        /Console.WriteLine(sum);
+        //Console.WriteLine(sum);
 
         //forward
 
@@ -270,7 +278,21 @@ class day4 : day_runner
 
     public override void part2()
     {
-        
+        //for each index in the matric
+        for(int r =0;  r < get_num_rows(); r++)
+        {
+            for(int c = 0; c < get_num_cols(); c++)
+            {
+                char letter = get_char(r, c);
+                if (letter == 'X')
+                {
+
+
+                }
+
+            }
+
+        }
     }
 
 
