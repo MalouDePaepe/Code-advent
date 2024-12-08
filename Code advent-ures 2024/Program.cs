@@ -56,159 +56,189 @@ class day4 : day_runner
     //[5,4][5,5][5,6]
     //[6,4][6,5][6,6]
 
-    bool isXMAS (int direction, int row, int col)
-    {
-
-
-
-    }
-
-    string get_row(int index)
-    {         
-        string row = "";
-        for (int col = 0; col < get_num_cols(); col++)
-        {
-            char character = get_char(index, col);
-            row += character;
-        }
-        return row;
-    }
-
-    string get_col(int index)
-    {
-        string col = "";
-        for(int r = 0; r < get_num_rows(); r++)
-        {
-            char character = get_char(r, index);
-            col += character;
-
-        }
-
-        return col;
-
-
-    }
-
-    
-   
-
-    int checkRow (string pattern, int r)
-    {
-        string row = get_row(r);
-        Regex rgx = new Regex(pattern);
-        MatchCollection correct = rgx.Matches(row);
-        return  correct.Count;
-
-    }
-
-    int checkCol(string pattern, int c)
-    {
-        string col = get_col(c);
-        Regex rgx = new Regex(pattern);
-        MatchCollection correct = rgx.Matches(col);
-        return correct.Count;
-
-    }
-
-    int checkDiagonalFirstRow(string pattern, bool forward)
+    int isXMAS (int row, int col)
     {
         int sum = 0;
-        //for each column of the first row
-        for(int i = 0; i  < get_num_cols(); i++) {
-            string diag = getDiagonalFirstRow(i, forward);
-            Regex rgx = new Regex(pattern);
-            MatchCollection correct = rgx.Matches(diag);
-            sum+= correct.Count;
-
-        }
-        return sum;
-    }
-
-
-    string getDiagonalFirstRow(int index, bool forward)
-    {
-
+        for(int i =0; i < 8; i++) 
+        { 
+            if(fullWord(row,col,i) == true) 
+                {
+                    sum++;
+                }
         
-        string diagonal = "";
-        int diagonalLength = index + 1;
-
-        // backwards
-        if (forward)
-        {
-            for (int i = 0; i < diagonalLength; i++)
-            {
-
-                char character = get_char(0 + i, index - i);
-                diagonal += character;
-
-
-            }
-        }
-        else
-        {
-            //forward
-            for (int i = 0; i < diagonalLength; i++)
-            {
-
-                char character = get_char(index - i, 0 + i);
-                diagonal += character;
-
-            }
-        }
-        return diagonal;
-
-    }
-
-    //needs row nr 
-    string getDiagonalLastColumn(int index, bool forward)
-    {
-        int diagonalLength = get_num_rows() - index;
-        string diagonal = "";
-        if (forward)
-        {
-            for (int i = 0; i < diagonalLength; i++)
-            {
-                char character = get_char(index + i, diagonalLength - i);
-                diagonal += character;
-
-            }
-        }
-        else
-        {
-            for (int i = 0; i < diagonalLength; i++)
-            {
-                char character = get_char(diagonalLength - i, index + i);
-                diagonal += character;
-
-            }
-
-        }
-        return diagonal;
-    }
-
-    
-    int checkDiagonalLastColumn(string pattern, bool forward)
-    {
-        int sum = 0;
-        //for each row of the last column
-
-        for (int i = 1; i < get_num_rows()-1; i++)
-        {
-            string diag = getDiagonalLastColumn(i, forward);
-            Regex rgx = new Regex(pattern);
-            MatchCollection correct = rgx.Matches(diag);
-            sum += correct.Count;
-
         }
         return sum;
+        // 8 directions 
 
     }
+
+    bool isInBounds(int row, int col)
+    {
+        if(row >= 0 && col >= 0 && row < get_num_rows() && col < get_num_cols()) return true;
+        return false;
+    }
+
+    int getDirectionColumn(int direction)
+    {
+        switch (direction)
+        {
+            case 0:
+                return -1;
+                break;
+            case 1:
+                return -1;
+                break;
+            case 2:
+                return 0;
+                break;
+            case 3:
+                return +1;
+                break;
+            case 4:
+                return +1;
+                break;
+            case 5:
+                return +1;
+                break;
+            case 6:
+                return 0;
+                break;
+            case 7:
+                return -1;
+                break;
+
+        }
+        return 0;
+    }
+    int getDirectionRow(int direction)
+    {
+        switch (direction)
+        {
+            case 0:
+                return 0;
+                break;
+            case 1:
+                return -1;
+                break;
+            case 2:
+                return -1;
+                break;
+            case 3:
+                return 0;
+                break;
+            case 4:
+                return +1;
+                break;
+            case 5:
+                return -1;
+                break;
+            case 6:
+                return +1;
+                break;
+            case 7:
+                return +1;
+                break;
+
+        }
+        return 0;
+    }
+
+
+    bool fullWord(int row, int col, int direction)
+    {
+        int directionRow = getDirectionRow(direction);
+        int directionCol = getDirectionColumn(direction);
+
+        if (get_char(row, col) == 'X')
+        {
+            // 0, backward, 1 left up, 2 up, 3  right up, 4 right, 5 right down, 6 down, 7 left down
+            bool secondLetter = checkDirection('M', direction, row + directionRow, col + directionCol);
+            if (secondLetter == true)
+            {
+                bool thirdLetter = checkDirection('A', direction, row + (directionRow*2), col + (directionCol *2));
+                if (thirdLetter == true)
+                {
+                    bool fourthLetter = checkDirection('S', direction, row + (directionRow*3), col + (directionCol * 3));
+                    if (fourthLetter == true) { return true; }
+                }
+                else return false;
+            }
+            else return false;
+        }
+        return false;
+
+    }
+
+    bool checkDirection(char letter, int direction, int row, int col)
+    {
+
+        // 0, backward, 1 left up, 2 up, 3  right up, 4 right, 5 right down, 6 down, 7 left down
+        //x >= 0 && x < list.Count && y >= 0 && y < list[x].Count
+        if (isInBounds(row, col))
+        {
+            char resultChar = get_char(row, col);
+            if (resultChar == letter) return true;
+        }
+        
+
+        /*switch (direction)
+            {
+                case 0:
+                if (col < 0 || col > get_num_cols() - 1 || row < 0 || row > get_num_rows() - 1)
+                {
+                    return false;
+                }
+                    if (get_char(row, col - 1) == letter) return true;
+                    break;
+
+                case 1:
+                    if (col-1 < 0 || col-1 > get_num_cols() - 1 || row-1 < 0 || row-1 > get_num_rows() -1) return false;
+                    if (get_char(row - 1, col - 1) == letter) return true;
+                    break;
+
+                case 2:
+                    if (row - 1 < 0 || row - 1 > get_num_rows() - 1 || col < 0 || col > get_num_cols() -1) return false;
+                    if (get_char(row - 1, col) == letter) return true;
+                    break;
+
+                case 3:
+                    if (col + 1 < 0 || col + 1> get_num_cols() - 1 || row - 1 < 0 || row - 1 > get_num_rows() - 1) return false;
+                    if (get_char(row - 1, col + 1) == letter) return true;
+                    break;
+
+                case 4:
+                    if (col + 1 < 0 || col + 1 > get_num_cols() - 1 || row < 0 || row > get_num_rows() -1) return false;
+                    if (get_char(row, col + 1) == letter) return true;
+                    break;
+
+                case 5:
+                    if (col + 1 < 0 || col + 1 > get_num_cols() - 1 || row +11 < 0 || row + 1 > get_num_rows() - 1) return false;
+                    if (get_char(row + 1, col+ 1) == letter) return true;
+                    break;
+
+                case 6:
+                    if (row + 1 < 0 || row + 1 > get_num_rows() - 1 || col <0 || col > get_num_cols() -1) return false;
+                    if (get_char(row + 1, col) == letter) return true;
+                    break;
+
+                case 7:
+                    if (col - 1 < 0 || col - 1 > get_num_cols() - 1 || row + 1 < 0 || row + 1 > get_num_rows() - 1) return false;
+                    if (get_char(row + 1, col -1) == letter) return true;
+                    break;
+
+            }
+        */
+        
+        return false;
+
+    }
+
 
 
 
     public override void parse()
     {
-        string filePath = "C:\\Git\\Code-advent\\resources\\inputDay4Test.txt";
+        string filePath = "C:\\Git\\Code-advent\\resources\\inputDay4.txt";
 
         // for each line in your file
         // make a new list of characters
@@ -224,75 +254,43 @@ class day4 : day_runner
         }
     }
 
+    void arnebox()
+    {
+        for (int i = 0; i < 8; ++i)
+        {
+            Console.WriteLine("direction:" + getDirectionColumn(i) + ", " + getDirectionRow(i));    
+        }
+    }
     public override void part1()
     {
-        int sum = 0;
-        int sum2 = 0;
-        string patternForward = @"(XMAS)";
-        string patternBackwards = @"(SAMX)";
 
-        // for each row
+        int result = 0;
+        //for each index in the matric
         for (int r = 0; r < get_num_rows(); r++)
         {
-           //sum += checkRow(patternForward, r);
-           //sum += checkRow(patternBackwards, r);
-            //Console.WriteLine(sum);
-        }
-
-        // regex on the row
-        // if its found, add it to the sum
-
-        //for each column
-        for (int c = 0; c < get_num_cols(); c++)
-        {
-            //sum += checkCol(patternForward, c);
-            //sum += checkCol(patternBackwards, c);
-            //Console.WriteLine(sum);
-        }
-        /////////////////
-
-        // diagonals
-       
-        // backward
-        
-        //sum += checkDiagonalFirstRow(patternForward, true);
-        //sum += checkDiagonalFirstRow(patternForward, false);
-        // = 1
-        //Console.WriteLine(sum);
-        //sum += checkDiagonalFirstRow(patternBackwards,true);
-        //sum += checkDiagonalFirstRow(patternBackwards,false);
-        // = +1
-        //Console.WriteLine(sum);
-        //sum += checkDiagonalLastColumn(patternForward, true);
-        //sum += checkDiagonalLastColumn(patternForward, false);
-        // = +1
-        //Console.WriteLine(sum);
-        //sum += checkDiagonalLastColumn(patternBackwards, true);
-        // sum += checkDiagonalLastColumn(patternBackwards, false);
-        // = +6
-        //Console.WriteLine(sum);
-
-        //forward
-
-    }
-
-    public override void part2()
-    {
-        //for each index in the matric
-        for(int r =0;  r < get_num_rows(); r++)
-        {
-            for(int c = 0; c < get_num_cols(); c++)
+            for (int c = 0; c < get_num_cols(); c++)
             {
                 char letter = get_char(r, c);
                 if (letter == 'X')
                 {
-
+                    int amount = isXMAS(r,c);
+                    result += amount;
 
                 }
 
             }
 
         }
+
+        Console.WriteLine("Day 4 Part 1 =" + result);
+
+
+
+    }
+
+    public override void part2()
+    {
+
     }
 
 
