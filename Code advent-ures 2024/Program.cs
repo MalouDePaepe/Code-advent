@@ -14,6 +14,7 @@ runners.Add(new day1());
 runners.Add(new day2());
 runners.Add(new day3());
 runners.Add(new day4());
+runners.Add(new day5());
 
 for (int i = 0; i < (runners.Count); i++)
 {
@@ -32,6 +33,111 @@ abstract class day_runner
     
 }
 
+class day5 : day_runner
+{
+    string input = "";
+    List<string> rules = new List<string>();
+    List<string> reports = new List<string>();
+    
+    public override void parse()
+    {
+        string filePath = "C:\\Git\\Code-advent\\resources\\inputDay5Test.txt";
+        // split at \n
+        input = File.ReadAllText(filePath);
+        string[] parts = input.Split("\n", StringSplitOptions.RemoveEmptyEntries);
+        for (int i = 0; i < parts.Length; i++)
+        {
+
+            if (parts[i].Contains("|") && parts[i] != "")
+            {
+
+                rules.Add(parts[i]);
+
+            }
+
+            if (parts[i].Contains(",") && parts[i] != "")
+            {
+
+                reports.Add(parts[i]);
+
+            }
+
+
+
+        }
+
+    }
+
+    bool doesRuleApply(List<string> report, string rule)
+    {
+
+        //rule has 2 integers, list of strings has to contain both numbers
+        // regex on rule to get the 2 ints, then check if report contains index 0 and index 1
+        string pattern = @"^-?\d{2}$";
+        Regex regex = new Regex(pattern);
+        MatchCollection splitRules = regex.Matches(rule);
+        
+        return false;
+
+
+    }
+
+    List<string> splitUpReport(string report)
+    {
+        string pattern = @"^-?\d{2}$";
+        Regex regex = new Regex(pattern);
+        MatchCollection splitReport = regex.Matches(report);
+        List <string> result = new List<string>();
+
+        foreach(string index in splitReport) 
+        { 
+            result.Add(index);
+        }
+        return result;
+
+    }
+    List<string> splitRules(string rule)
+    {
+        string pattern = @"^-?\d{2}$";
+        Regex regex = new Regex(pattern);
+        MatchCollection splitReport = regex.Matches(rule);
+        List<string> result = new List<string>();
+
+        foreach (string index in splitReport)
+        {
+            result.Add(index);
+        }
+        return result;
+
+    }
+
+    public override void part1()
+    {
+        List<string> splitReport = new List<string>();
+        
+        //for each full report 
+        for (int i = 0; i < reports.Count; i++)
+        {
+            bool correct = true;
+            splitReport = splitUpReport(reports[i]);
+            //for each 
+            foreach (string rule in rules)
+            {
+                correct = doesRuleApply(splitReport, rule);
+            }
+
+
+
+        }
+
+        Console.WriteLine(rules.Count() + "-----------");
+        Console.WriteLine(reports.Count() + "-----------");
+
+
+
+    }
+
+}
 class day4 : day_runner
 {
     List<List<char>> m_matrix = new List<List<char>>();
