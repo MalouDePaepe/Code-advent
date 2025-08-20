@@ -1,0 +1,18 @@
+rules 
+
+updates
+
+---------------
+
+only need to figure out which ones are correct
+
+parse file, 
+store reports in an array
+for each index, bool function 'correct', check if rule applies (both numbers need to be in 
+the array), then check each rule, 
+if a rule is not true, change the 'correct' bool and yeet it from the array
+
+
+store them in an array so we can get the middle page number
+
+seem to all be odd nr so count + 1 /2 would be a rounded up int
